@@ -1,0 +1,13 @@
+.env
+.phpintel/*
+vendor/*
+bin/*.sh
+tmp/*
+/.idea
+avatar/*
+/articles/wp-content/uploads/*
+/insidelook/wp-content/uploads/*
+node_modules/*
+docker/*
+phinx.yml
+img/*
