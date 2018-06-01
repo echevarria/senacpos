@@ -1,0 +1,51 @@
+@charset "utf-8";
+
+/* Reset start */
+
+a {
+	text-decoration: none;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, em, img, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, article, footer, header, nav, section, main {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul {
+	font-size: 3em;
+	font-weight: 100;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-family: "Roboto", sans-serif;
+    color: #fff;
+}
+
+/* Reset end */
+
+body {
+  background: #181d22;
+  text-align: center;
+}
+
+h1 {
+  margin: 100px 10px 50px 10px;
+}
+
+a {
+  background-color: #c9283e;
+  padding: 10px 120px;
+  margin: 0 10px;
+  border-radius: 5px;
+  transition: all .5s ease;
+}
+
+a:hover {
+  background-color: #8d1929;  
+}
+
