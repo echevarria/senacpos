@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Color Game</title>
+
+</head>
+<style>
+  body {
+    background-color: #232323;
+    margin: 0;
+    font-style: "Montserrat", "Avernir";
+  }
+
+  footer {
+    display: flex;
+    margin: 30% auto;
+    justify-content: center;
+  }
+
+  p {
+    color: #fff
+  }
+
+  a {
+    color: red;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #fff
+  }
+
+  .square {
+    width: 30%;
+    background: purple;
+    padding-bottom: 30%;
+    float: left;
+    margin: 1.66%;
+    border-radius: 15%;
+    transition: background 0.6s;
+    -webkit-transition: background 0.6s;
+    -moz-transiton: background 0.6s;
+  }
+
+  #container {
+    margin: 25px auto;
+    max-width: 600px;
+  }
+
+  h1 {
+    color: white;
+    text-align: center;
+    background: steelblue;
+    margin: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+    padding: 20px 0;
+  }
+
+  #message {
+    display: inline-block;
+    width: 20%;
+  }
+
+  #stripe {
+    background: white;
+    height: 30px;
+    text-align: center;
+    color: black;
+  }
+
+  .selected {
+    background: steelblue;
+    color: white;
+  }
+
+  #colorDisplay {
+    font-size: 200%;
+  }
+
+  button {
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    height: 100%;
+    font-weight: 700;
+    color: steelblue;
+    letter-spacing: 1px;
+    font-size: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    -webkit-transition: ball 0.5s;
+    -moz-transiton: all 0.5s;
+  }
+
+  button:hover {
+    color: white;
+    background: steelblue;
+  }
+</style>
+
+<body>
+  <h1>THE COOL
+    <br>
+    <span id="colorDisplay">RGB</span>
+    <br>COLOR GAME</h1>
+  <div id="stripe">
+    <button type="button" id="reset" name="button">New Colors</button>
+    <span id="message"></span>
+    <button class="mode" type="button" name="button">Easy</button>
+    <button class="mode selected" type="button" name="button">Hard</button>
+  </div>
+  <main>
+    <div id="container">
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+    </div>
+  </main>
+  <footer>
+    <p>Rudinei Silva - Fork Link ->
+      <a href="https://github.com/rudiss/senacpos" target="_blank">rudiss/senacpos</a>
+    </p>
+  </footer>
+  <script>
+    var numberSquares = 6;
+    var colors = [];
+    var pickedColor;
+    var squares = document.querySelectorAll(".square");
+    var colorDisplay = document.getElementById("colorDisplay");
+    var messageDisplay = document.getElementById("message");
+    var h1 = document.querySelector("h1");
+    var resetButton = document.querySelector("#reset");
+    var modeButtons = document.querySelectorAll(".mode");
+
+    init();
+
+    function init() {
+      setupModeButtons();
+      setupSquares();
+      reset();
+    }
+
+    function setupModeButtons() {
+      //mode buttons event listeners
+      for (var i = 0; i < modeButtons.length; i++) {
+        modeButtons[i].addEventListener("click", function () {
+          modeButtons[0].classList.remove("selected");
+          modeButtons[1].classList.remove("selected");
+          this.classList.add("selected");
+          this.textContent === "Easy" ? numberSquares = 3 : numberSquares = 6;
+          reset();
+        })
+      }
+    }
+
+    function setupSquares() {
+      for (var i = 0; i < squares.length; i++) {
+        //add click listeners to squares
+        squares[i].addEventListener("click", function () {
+          //grab color to pickedColor
+          var clickedColor = this.style.backgroundColor;
+          //compare color to pickedColor
+          if (clickedColor === pickedColor) {
+            messageDisplay.textContent = "Corret well done!";
+            resetButton.textContent = "Play Again?";
+            changeColors(clickedColor);
+            h1.style.backgroundColor = clickedColor;
+          } else {
+            this.style.backgroundColor = "#232323";
+            messageDisplay.textContent = "Try Again";
+          }
+        });
+      }
+    }
+
+    function reset() {
+      colors = generateRandomColors(numberSquares);
+      //pick a new random color from array
+      pickedColor = pickColor();
+      //change colorDisplay to match picked colorDisplay
+      colorDisplay.textContent = pickedColor
+      resetButton.textContent = "New Colors";
+      messageDisplay.textContent = "";
+      //change colors of squares
+      for (var i = 0; i < squares.length; i++) {
+        if (colors[i]) {
+          squares[i].style.display = "block";
+          squares[i].style.backgroundColor = colors[i];
+        } else {
+          squares[i].style.display = "none";
+        }
+        squares[i].style.backgroundColor = colors[i];
+      }
+      h1.style.backgroundColor = "steelblue";
+    }
+
+
+    resetButton.addEventListener("click", function () {
+      reset();
+    })
+
+
+    function changeColors(color) {
+      //loop througth all squares
+      for (var i = 0; i < squares.length; i++) {
+        //change each color to match given color
+        squares[i].style.backgroundColor = color;
+      };
+    }
+
+    function pickColor() {
+      var random = Math.floor(Math.random() * colors.length);
+      return colors[random];
+    }
+
+    function generateRandomColors(num) {
+      //make an array
+      var arr = [];
+      //reapet num times
+      for (var i = 0; i < num; i++) {
+        //get random color and push into arr
+        arr.push(randomColor());
+      }
+      //return that array
+      return arr;
+    }
+
+    function randomColor() {
+      var r = Math.floor(Math.random() * 256);
+      var g = Math.floor(Math.random() * 256);
+      var b = Math.floor(Math.random() * 256);
+      return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
+  </script>
+</body>
+
+</html>
